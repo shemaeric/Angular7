@@ -27,5 +27,8 @@ module.exports = {
   plugins: [
     // inject JavaScript bundle output outputs to the index.html
     new HtmlWebpackPlugin({ template: "./src/index.html" })
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true
+  }
 };
