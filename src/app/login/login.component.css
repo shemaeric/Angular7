@@ -1,3 +1,13 @@
+div[registerLink] a {
+  text-decoration: none;
+  color: #999;
+}
+
+div[forgot] a {
+  text-decoration: none;
+  color: #999;
+}
+
 .limiter {
   background-color: black;
 }
@@ -162,6 +172,16 @@ input .input-field{
     -moz-transition: all .4s;
     transition: all .4s;
 }
+
+.link-checkbox {
+  margin-left: 30px;
+  margin-top: 10px;
+  font-family: 'Poppins-Regular';
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+}
+
 @media (max-width: 576px) {
   .login-form {
     padding: 30px 20px 30px 20px;
