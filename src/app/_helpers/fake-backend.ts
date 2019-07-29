@@ -11,16 +11,8 @@ import { Observable, of, throwError } from "rxjs";
 import { delay, mergeMap, materialize, dematerialize } from "rxjs/operators";
 
 // initialize the array of users to be stored in the local storage
-let users = [
-  {
-    id: 1,
-    firstName: "Clinton",
-    lastName: "Munana",
-    username: "test",
-    password: "test"
-  }
-];
-
+// array in local storage for registered users
+let users = JSON.parse(localStorage.getItem('users')) || [];
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   intercept(
@@ -40,6 +32,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       switch (true) {
         case url.endsWith("/users/authenticate") && method === "POST":
           return authenticate();
+          case url.endsWith('/users/register') && method === 'POST':
+              return register();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -63,6 +57,26 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       });
     }
 
+    function register () {
+      // get the user from the body sent by user rom the registration form
+      const user = body;
+
+      // check if the username is already taken and return the error message
+      if ( users.find(x => x.username === user.username )) {
+        return error('Username' + ' ' + user.username + ' ' + 'is already taken')
+      }
+
+      // if the username is not taken then get ID from the great number from the array of users
+      user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
+
+      // push the new user object in an array of users
+      users.push(user);
+
+      // set the new updated users array on the local storage
+      localStorage.setItem('users', JSON.stringify(users));
+      return ok();
+    }
+
     // helper functions
 
     function ok(body?) {
@@ -70,6 +84,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function error(message) {
+      console.log('message in fake',message)
       return throwError({ error: { message } });
     }
   }

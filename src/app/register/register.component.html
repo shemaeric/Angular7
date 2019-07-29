@@ -1,67 +1,88 @@
 <div class="limiter">
-        <div class="container-login">
-          <div class="wrap-login">
-            <div class="login-title">
-              <div class="login-title-text">
-                  <h1>SIGN UP</h1>
-              </div>
-            </div>
-              <form class="login-form">
-                <div class="wrap-input mb-4">
-                  <span class="label-input">Username</span>
-                  <input 
-                  class="input-field"
-                  type="text"
-                  name="username"
-                  placeholder="Enter Username"
-                  />
-                  <span class="focus-input"></span>
-                </div>
-
-                <div class="wrap-input mb-4">
-                        <span class="label-input">Email &nbsp; &nbsp; &nbsp;</span>
-                        <input 
-                        class="input-field"
-                        type="text"
-                        name="email"
-                        placeholder="Enter Email"
-                        />
-                        <span class="focus-input"></span>
-                      </div>
-      
-                <div class="wrap-input m-b-18">
-                    <span class="label-input">Password</span>
-                    <input 
-                    class="input-field"
-                    type="text"
-                    name="password"
-                    placeholder="Enter Password"
-                    />
-                    <span class="focus-input"></span>
-                </div>
-                <div class="flex-sb-m w-full p-b-30">
-                  <div class="form-checkbox">
-                    <input
-                    class="input-checkbox"
-                    type="checkbox"
-                    name="remember-me"
-                    />
-                    <label class="label-checkbox">Remember me</label>
-                  </div>
-                  <div forgot>
-                    <a class="txt1">Forgot Password</a>
-                  </div>
-                </div>
-                <div class="container-login-btn">
-                  <button class="login-btn">
-                    Sign up
-                  </button>
-                  <div registerLink class="link-checkbox">
-                      <a routerLink="/login">Login</a>
-                  </div>
-                </div>
-              </form>
+    <div class="container-login">
+      <div class="wrap-login">
+        <div class="login-title">
+          <div class="login-title-text">
+            <h1>SIGN UP</h1>
           </div>
         </div>
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+        <form [formGroup]="registerForm" class="login-form" (ngSubmit)="onSubmit()">
+          <div class="wrap-input mb-4">
+            <label for="firstName" class="label-input">First Name</label>
+            <input
+              type="text"
+              formControlName="firstName"
+              class="input-field"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            />
+            <span class="focus-input"> </span>
+          </div>
+          <div *ngIf="submitted && f.firstName.errors">
+              <div *ngIf="f.firstName.errors.required" class="empty">
+                firstName is required
+              </div>
+            </div>
+
+          <div class="wrap-input mb-4">
+              <label for="lastName" class="label-input">Last Name</label>
+              <input
+                type="text"
+                formControlName="lastName"
+                class="input-field"
+                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+              />
+              <span class="focus-input"> </span>
+            </div>
+            <div *ngIf="submitted && f.lastName.errors">
+                <div *ngIf="f.lastName.errors.required" class="empty">
+                  Last Name is required
+                </div>
+              </div>
+
+          <div class="wrap-input mb-4">
+              <label for="username" class="label-input">Username</label>
+              <input
+                type="text"
+                formControlName="username"
+                class="input-field"
+                [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+              />
+              <span class="focus-input"> </span>
+            </div>
+          <div *ngIf="submitted && f.username.errors">
+            <div *ngIf="f.username.errors.required" class="empty">
+              Username is required
+            </div>
+          </div>
+          <div class="wrap-input mb-4">
+            <label for="password" class="label-input">Password</label>
+            <input
+              type="password"
+              formControlName="password"
+              class="input-field"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            />
+          </div>
+          <div *ngIf="submitted && f.password.errors">
+            <div *ngIf="f.password.errors.required" class="empty">
+              Password is required
+            </div>
+          </div>
+          <div class="container-login-btn">
+            <button [disabled]="loading" class="login-btn">
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"
+              ></span>
+              Sign Up
+            </button>
+            <div registerLink class="link-checkbox">
+              <a routerLink="/login">Login Instead</a>
+            </div>
+          </div>
+        </form>
       </div>
-      
+    </div>
+  </div>
+  

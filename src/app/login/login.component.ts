@@ -15,6 +15,7 @@ export class LoginComponent {
   submitted = false;
   returnUrl: string;
   error: string;
+  success: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,6 +37,10 @@ export class LoginComponent {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
+
+    if( this.route.snapshot.queryParams['registered']) {
+      this.success = 'Registration Successful';
+    }
   }
 
   get f() {
@@ -44,6 +49,10 @@ export class LoginComponent {
 
   onSubmit() {
     this.submitted = true;
+
+    // resets the alert on submit
+    this.error = null;
+    this.success = null;
 
     // check if form is invalid and then stop the submission
     if (this.loginForm.invalid) {
@@ -56,11 +65,9 @@ export class LoginComponent {
       .pipe(first())
       .subscribe(
         data => {
-          console.log('data',data);
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          console.log('error',error);
           this.error = error;
           this.loading = false;
         }

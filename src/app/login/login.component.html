@@ -3,35 +3,53 @@
     <div class="wrap-login">
       <div class="login-title">
         <div class="login-title-text">
-            <h1>LOG IN</h1>
+          <h1>LOG IN</h1>
         </div>
       </div>
-        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-        <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
-          <div class="wrap-input mb-4">
-              <label for="username" class="label-input">Username</label>
-              <input type="text" formControlName="username" class="input-field" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-              <span class="focus-input"></span>
-              <div *ngIf="submitted && f.username.errors">
-                  <div *ngIf="f.username.errors.required">Username is required</div>
-              </div>
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      <div *ngIf="success" class="alert alert-success">{{success}}</div>
+      <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
+        <div class="wrap-input mb-4">
+          <label for="username" class="label-input">Username</label>
+          <input
+            type="text"
+            formControlName="username"
+            class="input-field"
+            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+          />
+          <span class="focus-input"> </span>
+        </div>
+        <div *ngIf="submitted && f.username.errors">
+          <div *ngIf="f.username.errors.required" class="empty">
+            Username is required
           </div>
-          <div class="wrap-input mb-4">
-              <label for="password" class="label-input" >Password</label>
-              <input type="password" formControlName="password" class="input-field" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-              <div *ngIf="submitted && f.password.errors">
-                  <div *ngIf="f.password.errors.required">Password is required</div>
-              </div>
+        </div>
+        <div class="wrap-input mb-4">
+          <label for="password" class="label-input">Password</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="input-field"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+          />
+        </div>
+        <div *ngIf="submitted && f.password.errors">
+          <div *ngIf="f.password.errors.required" class="empty">
+            Password is required
           </div>
-          <div class="container-login-btn">
-              <button [disabled]="loading" class="login-btn">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                  Login
-              </button>
-              <div registerLink class="link-checkbox">
-                <a routerLink="/register">Sign up</a>
-            </div>
+        </div>
+        <div class="container-login-btn">
+          <button [disabled]="loading" class="login-btn">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Login
+          </button>
+          <div registerLink class="link-checkbox">
+            <a routerLink="/register">Sign up</a>
           </div>
+        </div>
       </form>
     </div>
   </div>
